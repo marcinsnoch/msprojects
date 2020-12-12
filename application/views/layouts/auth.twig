@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        {% block head %}
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <title>{% block title %}{% endblock %}</title>
+            <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+            <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+            <link href="{{ base_url('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+            <link href="{{ base_url('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ base_url('plugins/admin-lte/css/adminlte.min.css') }}" rel="stylesheet">
+            <link href="{{ base_url('css/styles.min.css') }}" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+        {% endblock %}
+    </head>
+
+    <body class="hold-transition login-page">
+        {% block content %}{% endblock %}
+        {% block scripts %}
+            <script src="{{ base_url('plugins/jquery/jquery.min.js') }}"></script>
+            <script src="{{ base_url('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+            <script src="{{ base_url('plugins/admin-lte/js/adminlte.min.js') }}"></script>
+            <script src="{{ base_url('plugins/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
+            <script src="{{ base_url('js/application.min.js') }}"></script>
+            {% set alert = session.flashdata('alert') %}
+            {% if alert %}
+                <script>
+                    $.notify({
+                        message: '{{ alert.msg }}'
+                    }, {
+                        type: '{{ alert.type }}',
+                        z_index: 1050,
+                        placement: {
+                            align: "center"
+                        }
+                    });
+                </script>
+            {% endif %}
+        {% endblock %}
+    </body>
+
+</html>

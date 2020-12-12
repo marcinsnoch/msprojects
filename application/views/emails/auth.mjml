@@ -1,0 +1,47 @@
+<mjml>
+    <mj-body background-color="#ffffff">
+        <!-- Header -->
+        <mj-section full-width="full-width" background-color="#f0f0f0">
+            <mj-column>
+                <mj-text align="center" font-style="italic" font-size="20px" color="#626262">
+                    {{ header|default(config.item('app_name')) }}
+                </mj-text>
+            </mj-column>
+        </mj-section>
+        <!-- Body top -->
+        <mj-section background-color="#ffffff">
+            <mj-column>
+                <mj-text color="#525252">
+                    <h1>{{ body_title|default('Hello!') }}</h1>
+                    {{ body_top }}
+                </mj-text>
+                <!-- Body btn -->
+                <mj-raw>
+                    {% if btn.link %}
+                    </mj-raw>
+                    <mj-button background-color="#F45E43" href="{{ btn.link }}">{{ btn.name }}</mj-button>
+                    <mj-raw>
+                    {% endif %}
+                </mj-raw>
+                <!-- Body bottom -->
+                <mj-raw>
+                    {% if body_bottom %}
+                    </mj-raw>
+                    <mj-text color="#525252">
+                        {{ body_bottom }}
+                    </mj-text>
+                    <mj-raw>
+                    {% endif %}
+                </mj-raw>
+            </mj-column>
+        </mj-section>
+        <!-- Footer -->
+        <mj-section full-width="full-width" background-color="#f0f0f0">
+            <mj-column>
+                <mj-text align="center" color="#828282">
+                    {{ footer|default('&copy; ' ~ "now"|date("Y") ~ ' ' ~ config.item('app_name') ~ '. All rights reserved.')|raw }}
+                </mj-text>
+            </mj-column>
+        </mj-section>
+    </mj-body>
+</mjml>

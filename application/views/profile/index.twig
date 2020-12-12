@@ -1,0 +1,60 @@
+{% extends "layouts/application.twig" %}
+
+{% set title = lang('Profile') %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">{{ title }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ base_url('/') }}">Home</a></li>
+                        <li class="breadcrumb-item active">{{ title }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ lang('Edit') }}</h3>
+                </div>
+                {{ form_open() }}
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="inputEmail">Email</label>
+                        <input type="email" name="email" id="inputEmail" class="form-control" value="{{ user.email }}" disabled="disabled">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputFullName">Full name</label>
+                        <input type="text" name="full_name" id="inputFullName" class="form-control{{ form_error('full_name') ? ' is-invalid'}}" value="{{ set_value('full_name', user.full_name) }}">
+                        {{ form_error('full_name') }}
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control{{ form_error('password') ? ' is-invalid'}}" placeholder="Password">
+                        {{ form_error('password') }}
+                    </div>
+                    <div class="form-group">
+                        <label for="inputConfirmPassword">Confirm password</label>
+                        <input type="password" name="confirm_password" id="inputConfirmPassword" class="form-control{{ form_error('confirm_password') ? ' is-invalid'}}" placeholder="Confirm password">
+                        {{ form_error('confirm_password') }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ base_url('/') }}" class="btn btn-default"><i class="fa fa-times"></i> {{ lang('Cancel') }}</a>
+                    <button type="submit" name="update" class="btn btn-primary float-right" value="true">
+                        <i class="fas fa-sync"></i> Update
+                    </button>
+                </div>
+                {{ form_close() }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

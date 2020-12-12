@@ -1,0 +1,15 @@
+{
+    "autoload": {
+        "classmap": [
+            "application/models"
+        ]
+    },
+    "config": {
+        "vendor-dir": "application/vendor"
+    },
+    "require": {
+        "twig/twig": "^2.14.1",
+        "twig/intl-extra": "^2.14.1",
+        "illuminate/database": "5.8"
+    }
+}
