@@ -50,8 +50,6 @@ class MY_Controller extends CI_Controller
      */
     private function _load_twig_globals($defaults = [])
     {
-        // $this->twig->addGlobal('config', $this->config);
-        // $this->twig->addGlobal('session', $this->session);
         $globals = array_merge($defaults, $this->twig_globals);
         foreach ($globals as $key => $val) {
             if (is_int($key)) {
@@ -69,7 +67,7 @@ class MY_Controller extends CI_Controller
     public function logged_in()
     {
         if ((bool) !$this->session->userdata('logged_in')) {
-            redirect('login');
+            redirect('/login');
         }
     }
 }

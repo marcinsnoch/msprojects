@@ -9,17 +9,18 @@
             <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
             <link href="{{ base_url('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
             <link href="{{ base_url('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ base_url('plugins/bootstrap-table/bootstrap-table.min.css') }}" rel="stylesheet">
             <link href="{{ base_url('plugins/admin-lte/css/adminlte.min.css') }}" rel="stylesheet">
-            <link href="{{ base_url('css/styles.min.css') }}" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+            <link href="{{ base_url('css/styles.min.css') }}" rel="stylesheet">
             <title>{% block title %}{% endblock %}</title>
+            <script>const base_url = '{{ base_url() }}';</script>
         {% endblock %}
     </head>
 
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                <!-- Left navbar links -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" data-widget="pushmenu" href="#" role="button">
@@ -33,21 +34,17 @@
                         <a href="{{ site_url('/contact') }}" class="nav-link">Contact</a>
                     </li>
                 </ul>
-                <!-- SEARCH FORM -->
                 {{ form_open('', 'class="form-inline ml-3"') }}
-                    <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="{{ lang('Search') }}" aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-navbar" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" type="search" placeholder="{{ lang('Search') }}" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
+                </div>
                 {{ form_close() }}
-
-                <!-- Right navbar links -->
                 <ul class="navbar-nav ml-auto">
-                    <!-- Messages Dropdown Menu -->
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-comments"></i>
@@ -55,9 +52,8 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
                                 <div class="media">
-                                    <img src="img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                    <img src="{{ site_url('img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                                     <div class="media-body">
                                         <h3 class="dropdown-item-title">
                                             Brad Diesel
@@ -67,13 +63,11 @@
                                         <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                                     </div>
                                 </div>
-                                <!-- Message End -->
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
                                 <div class="media">
-                                    <img src="img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                    <img src="{{ site_url('img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
                                     <div class="media-body">
                                         <h3 class="dropdown-item-title">
                                             John Pierce
@@ -83,13 +77,11 @@
                                         <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                                     </div>
                                 </div>
-                                <!-- Message End -->
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item">
-                                <!-- Message Start -->
                                 <div class="media">
-                                    <img src="img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                    <img src="{{ site_url('img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
                                     <div class="media-body">
                                         <h3 class="dropdown-item-title">
                                             Nora Silvester
@@ -99,13 +91,11 @@
                                         <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                                     </div>
                                 </div>
-                                <!-- Message End -->
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
                         </div>
                     </li>
-                    <!-- Notifications Dropdown Menu -->
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-bell"></i>
@@ -137,7 +127,6 @@
                             <i class="fas fa-th-large"></i>
                         </a>
                     </li>
-                    <!-- User menu -->
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                             <i class="fas fa-user"></i>
@@ -156,47 +145,50 @@
                 </ul>
             </nav>
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
-                <!-- Brand Logo -->
                 <a href="" class="brand-link">
-                    <img src="img/logo.svg" alt="{{ config.item('app_name') }}" class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <img src="{{ site_url('img/logo.svg') }}" alt="{{ config.item('app_name') }}" class="brand-image img-circle elevation-3" style="opacity: .8">
                     <span class="brand-text font-weight-light">{{ config.item('app_name') }}</span>
                 </a>
-                <!-- Sidebar -->
                 <div class="sidebar">
-                    <!-- Sidebar Menu -->
                     <nav class="mt-2">
-                        <ul class="nav nav-pills nav-sidebar flex-column nav-legacy" data-widget="treeview" role="menu" data-accordion="false">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <li class="nav-item">
-                                <a href="{{ site_url('/') }}" class="nav-link active">
+                                <a href="{{ site_url('/') }}" class="nav-link">
                                     <i class="nav-icon fas fa-home"></i>
                                     <p>{{ lang('Home') }}</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ site_url('/users') }}" class="nav-link">
+                                <a href="{{ site_url('/projects') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>{{ lang('Projects') }}</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ site_url('/customers') }}" class="nav-link">
                                     <i class="nav-icon fas fa-users"></i>
-                                    <p>{{ lang('Users') }}</p>
+                                    <p>{{ lang('Customers') }}</p>
                                 </a>
                             </li>
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-th"></i>
+                                    <i class="nav-icon fas fa-cogs"></i>
                                     <p>
-                                        Start
+                                        Menu
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                        <a href="{{ base_url('/projects') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Active Page</p>
+                                            <p>{{ lang('List_of_projects') }}</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                        <a href="{{ base_url('/projects/create') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Inactive Page</p>
+                                            <p>{{ lang('Create_new') }}</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -238,13 +230,7 @@
             {% set alert = session.flashdata('alert') %}
             {% if alert %}
                 <script>
-                    $.notify({
-                        message: '{{ alert.msg }}'
-                    }, {
-                        type: '{{ alert.type }}',
-                        z_index: 1050,
-                        placement: {align: 'center'}
-                    });
+                    $.notify({message: '{{ alert.msg }}'}, {type: '{{ alert.type }}'});
                 </script>
             {% endif %}
         {% endblock %}

@@ -30,6 +30,7 @@
                     <div class="form-group">
                         <label for="inputEmail">Email</label>
                         <input type="email" name="email" id="inputEmail" class="form-control" value="{{ user.email }}" disabled="disabled">
+                        {{ form_error('email') }}
                     </div>
                     <div class="form-group">
                         <label for="inputFullName">Full name</label>

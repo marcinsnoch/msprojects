@@ -1,0 +1,119 @@
+{% extends "layouts/application.twig" %}
+
+{% set title = lang('Projects') %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">{{ title }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ base_url('/') }}">{{ lang('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ base_url('/projects') }}">{{ lang('Projects') }}</a></li>
+                        <li class="breadcrumb-item active">{{ lang('Create') }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ lang('Create_new') }}</h3>
+                </div>
+                {{ form_open() }}
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="customerInput">{{ lang('Customer') }} (<a href="{{ base_url('/customers/create') }}">{{ lang('Create') }}</a>)</label>
+                        <select name="customer_id" class="form-control{{ form_error('customer_id') ? ' is-invalid'}}" id="customerInput">
+                            <option value=""></option>
+                            {% for customer in customers %}
+                                <option value="{{ customer.id }}">{{ customer.name }}</option>
+                            {% endfor %}
+                        </select>
+                        {{ form_error('customer_id') }}
+                    </div>
+                    <div class="form-group">
+                        <label for="nameInput">{{ lang('Name') }}</label>
+                        <input type="text" name="name" class="form-control{{ form_error('name') ? ' is-invalid'}}" id="nameInput" value="{{ set_value('name') }}">
+                        {{ form_error('name') }}
+                    </div>
+                    <div class="form-group">
+                        <label for="personInput">{{ lang('Person') }}</label>
+                        <input type="text" name="person" class="form-control{{ form_error('person') ? ' is-invalid'}}" id="personInput" value="{{ set_value('person') }}">
+                        {{ form_error('person') }}
+                    </div>
+                    <div class="form-group">
+                        <label for="descriptionInput">{{ lang('Description') }}</label>
+                        <textarea name="description" class="form-control{{ form_error('description') ? ' is-invalid'}}" id="descriptionInput" rows="3">{{ set_value('description') }}</textarea>
+                        {{ form_error('description') }}
+                    </div>
+                    <div class="form-group">
+                        <label for="detailsInput">{{ lang('Details') }}</label>
+                        <textarea name="details" class="form-control{{ form_error('details') ? ' is-invalid'}}" id="detailsInput" rows="3">{{ set_value('details') }}</textarea>
+                        {{ form_error('details') }}
+                    </div>
+                    <div class="form-group">
+                        <label for="priceInput">{{ lang('Price') }}</label>
+                        <input type="number" min="0.00" max="10000.00" step="0.01" name="price" class="form-control{{ form_error('price') ? ' is-invalid'}}" id="priceInput" value="{{ set_value('price') }}">
+                        {{ form_error('price') }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ base_url('/projects') }}" class="btn btn-default">
+                        <i class="fa fa-times"></i> {{ lang('Cancel') }}
+                    </a>
+                    <button type="submit" name="create_project" value="true" class="btn btn-primary float-right">
+                        <i class="fa fa-save"></i> {{ lang('Save') }}
+                    </button>
+                </div>
+                {{ form_close() }}
+            </div>
+    </section>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script>
+        $("button[name=update_comment]").click(function (e) {
+            e.preventDefault();
+            const comment_id = $(this).val();
+            const body = $('#commentId-' + comment_id).val();
+            $.ajax({
+                type: "POST",
+                url: '/comments/ajax-update',
+                data: {
+                    "comment_id": comment_id,
+                    "body": body
+                },
+                success: function (data) {
+                    window.location.reload(true);
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+        $("button[name=del_comment]").click(function (e) {
+            e.preventDefault();
+            const comment_id = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: '/comments/ajax-delete',
+                data: {
+                    'comment_id': comment_id
+                },
+                success: function (data) {
+                    $('#comment-' + comment_id).remove();
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+{% endblock %}

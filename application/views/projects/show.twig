@@ -1,0 +1,107 @@
+{% extends "layouts/application.twig" %}
+
+{% set title = lang('Projects') %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">{{ title }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ base_url('/') }}">{{ lang('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ base_url('/projects') }}">{{ lang('Projects') }}</a></li>
+                        <li class="breadcrumb-item active">{{ lang('Show') }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ lang('Details') }}</h3>
+                    <div class="card-tools">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-wrench"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <a href="{{ base_url('/projects/edit/'~project.id) }}" class="dropdown-item">{{ lang('Edit') }}</a>
+                                <a class="dropdown-divider"></a>
+                                <a href="{{ base_url('/projects/delete/'~project.id) }}" class="dropdown-item" onclick="return confirm('{{ lang('Are_you_sure') }}');">{{ lang('Delete') }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <p>{{ lang('Name') }}: <b>{{ project.name }}</b></p>
+                        <p>{{ lang('Description') }}: {{ project.description }}</p>
+                        <p>{{ lang('Person') }}: {{ project.person }}</p>
+                        <p>{{ lang('Price') }}: {{ project.price|format_currency('PLN') }}</p>
+                    </ul>
+                    <h3 class="h4 pb-3">{{ lang('Details') }}</h3>
+                    <p class="pb-3">{{ project.details|default('N/A') }}</p>
+                    <h3 class="h4 pb-3">{{ lang('Comments') }}</h3>
+                    {% if project.comments.count() > 0 %}
+                        {% for comment in project.comments %}
+                            <div class="comment">
+                                <div class="body">#{{ loop.index }}. {{ comment.body }}</div>
+                                <div class="sign">
+                                    <i class="far fa-calendar-alt"></i>
+                                    {{ comment.created_at|date('d-m-Y') }}
+                                    <i class="fa fa-user"></i>
+                                    {{ comment.user.full_name }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>{{ lang('There_are_no_comments') }}</p>
+                    {% endif %}
+                    <hr>
+                    {{ form_open('comments/ajax-create', 'id="commentForm"') }}
+                    {{ form_hidden('project_id', project.id) }}
+                    <div class="form-group">
+                        <label for="commentBodyInput">{{ lang('Leave_a_message') }}</label>
+                        <textarea class="form-control" name="body" id="commentBodyInput" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-right">
+                        <i class="fa fa-plus-circle"></i> {{ lang('Save') }}
+                    </button>
+                    {{ form_close() }}
+                </div>
+                <div class="card-footer">
+                    <a href="{{ base_url('projects') }}" class="btn btn-dark">
+                        <i class="fa fa-arrow-circle-left"></i> {{ lang('Back') }}
+                    </a>
+                </div>
+            </div>
+    </section>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script>
+        $("#commentForm").submit(function (e) {
+            e.preventDefault();
+            const form = $(this);
+            const url = form.attr('action');
+            const project_id = $('input[name="project_id"]').val();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                success: function (data) {
+                    window.location.replace('/projects/show/' + project_id);
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+{% endblock %}

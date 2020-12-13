@@ -23,6 +23,13 @@ $config = [
         ['field' => 'password', 'label' => 'Password', 'rules' => 'trim'],
         ['field' => 'confirm_password', 'label' => 'Confirm password', 'rules' => 'trim|matches[password]'],
     ],
+    'create_project' => [
+        ['field' => 'name', 'label' => 'Name', 'rules' => 'required|trim'],
+        ['field' => 'person', 'label' => 'Person', 'rules' => 'required|trim'],
+        ['field' => 'description', 'label' => 'Description', 'rules' => 'required|trim'],
+        ['field' => 'details', 'label' => 'Detail', 'rules' => 'required|trim'],
+        ['field' => 'customer_id', 'label' => 'Customer', 'rules' => 'numeric|trim'],
+    ],
 ];
 
 $config['error_prefix'] = '<div class="invalid-feedback">';

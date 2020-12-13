@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-$route['default_controller'] = 'home';
+$route['default_controller'] = 'projects';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = true;
 

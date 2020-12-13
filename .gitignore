@@ -10,7 +10,6 @@
 ###APP###
 application/vendor/*
 node_modules/
-public/assets/bower_components/*
 public/uploads/*
 
 ###NetBeans###
@@ -19,3 +18,4 @@ nbproject
 #other
 .phpintel
 *.cache
+*.log

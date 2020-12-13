@@ -1,0 +1,130 @@
+{% extends "layouts/application.twig" %}
+
+{% set title = lang('Customers') %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">{{ title }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ base_url('/') }}">{{ lang('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ base_url('/customers') }}">{{ lang('Customers') }}</a></li>
+                        <li class="breadcrumb-item active">{{ lang('Show') }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{ lang('Details') }}</h3>
+                    <div class="card-tools">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-wrench"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <a href="{{ base_url('/customers/edit/'~customer.id) }}" class="dropdown-item">{{ lang('Edit') }}</a>
+                                <a class="dropdown-divider"></a>
+                                <a href="{{ base_url('/customers/delete/'~customer.id) }}" class="dropdown-item" onclick="return confirm('{{ lang('Are_you_sure') }}');">{{ lang('Delete') }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>{{ lang('Details') }}</h3>
+                            <p>{{ lang('Name') }}: <b>{{ customer.name }}</b></p>
+                            <p>{{ lang('Email') }}: {{ customer.email }}</p>
+                            <p>{{ lang('Website') }}: {{ customer.website }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>{{ lang('Address') }}</h3>
+                            <p>{{ customer.address.address }}</p>
+                            <p>{{ customer.address.postal_code }}</p>
+                            <p>{{ customer.address.city }}</p>
+                            <p>{{ customer.address.country }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <h3 class="mb-3">{{ lang('Projects') }}</h3>
+                    {% if customer.projects.count() > 0 %}
+                    <div id="toolbar">
+                        <a href="{{ base_url('/projects/create') }}" class="btn btn-default">
+                            <i class="fas fa-plus-circle"></i> {{ lang('Create_new') }}
+                        </a>
+                    </div>
+                    <table id="table">
+                        <thead>
+                            <tr>
+                                <th data-field="id" data-formatter="#%s">ID</th>
+                                <th data-field="created_at">{{ lang('Date') }}</th>
+                                <th data-field="name">{{ lang('Name') }}</th>
+                                <th data-field="price" data-formatter="priceFormatter">PLN</th>
+                                <th data-field="customer.name">{{ lang('Customer') }}</th>
+                                <th data-field="id" data-formatter="openFormatter" data-width="105">{{ lang('Actions') }}</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    {% else %}
+                        <p>{{ lang('There_are_no_projects') }}</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a href="{{ base_url('projects') }}" class="btn btn-dark">
+                        <i class="fa fa-arrow-circle-left"></i> {{ lang('Back') }}
+                    </a>
+                </div>
+            </div>
+    </section>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ base_url('plugins/bootstrap-table/bootstrap-table.min.js') }}"></script>
+    <script>
+        const $table = $('#table');
+        $table.bootstrapTable({
+            url: '{{ base_url("/projects/table-data") }}',
+            buttonsClass: 'btn btn-primary',
+            classes: 'table table-hover',
+            pageSize: 25,
+            search: true,
+            showColumns: true,
+            pagination: true,
+            sitePagination: 'client',
+            showPaginationSwitch: true,
+            showRefresh: true,
+            toolbar: '#toolbar',
+            queryParams: queryParams
+        });
+
+        function queryParams(params) {
+            params.customer_id = '{{ customer.id }}';
+            return params;
+        }
+
+        function priceFormatter(amount) {
+            if (amount > '0') {
+                const formatter = new Intl.NumberFormat('pl-PL', {
+                    style: 'currency',
+                    currency: 'PLN',
+                });
+                return formatter.format(amount);
+            }
+            return '-';
+        }
+
+        function openFormatter(value) {
+            return '<a href="' + base_url + 'projects/show/' + value + '" class="btn btn-link btn-sm"><i class="far fa-folder-open"></i> ' + '{{ lang('Show') }}' + '</a>';
+        }
+
+    </script>
+{% endblock %}
