@@ -33,7 +33,7 @@ class Auth extends MY_Controller
             }
             if (password_verify($this->input->post('password'), $user->password)) {
                 $this->_login($user);
-                redirect('/');
+                redirect('/dashboard');
             }
         }
         $this->twig->display('auth/login');
@@ -145,7 +145,7 @@ class Auth extends MY_Controller
     public function _logged_in()
     {
         if ((bool) $this->session->userdata('logged_in')) {
-            redirect('/home');
+            redirect('/dashboard');
         }
     }
 

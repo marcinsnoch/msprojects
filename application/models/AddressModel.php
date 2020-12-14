@@ -7,6 +7,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
 class AddressModel extends Eloquent
 {
     protected $table = 'addresses';
+    protected $fillable = ['organization', 'address', 'postcode', 'city', 'country', 'name', 'phone'];
 
     public function customers()
     {

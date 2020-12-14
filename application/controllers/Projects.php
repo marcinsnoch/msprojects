@@ -26,7 +26,7 @@ class Projects extends MY_Controller
     {
         $customers = CustomerModel::all();
         if ($this->input->post('create_project') && $this->form_validation->run('create_project')) {
-            $data = array_from_post(['name', 'person', 'description', 'details', 'price', 'customer_id']);
+            $data = array_from_post(['name', 'commissioned_by', 'description', 'details', 'price', 'customer_id']);
             $data['user_id'] = $this->session->user_id;
             ProjectModel::create($data);
             set_alert('success', lang('Created'));

@@ -8,19 +8,26 @@ $lang['Address'] = 'Address';
 $lang['Back'] = 'Back';
 //C
 $lang['Cancel'] = 'Cancel';
+$lang['City'] = 'City';
 $lang['Comments'] = 'Comments';
-$lang['Create'] = 'Create';
+$lang['Commissioned_by'] = 'Commissioned by';
+$lang['Contact_address'] = 'Contact address';
+$lang['Contact_person'] = 'Contact person';
+$lang['Country'] = 'Country';
 $lang['Create_new'] = 'Create new';
+$lang['Create'] = 'Create';
 $lang['Created'] = 'Created!';
 $lang['Customer'] = 'Customer';
 $lang['Customers'] = 'Customers';
 //D
+$lang['Dashboard'] = 'Dashboard';
 $lang['Date_of_created'] = 'Date of created';
 $lang['Date_of_ended'] = 'Date of ended';
-$lang['Description'] = 'Description';
-$lang['Details'] = 'Details';
+$lang['Date'] = 'Date';
 $lang['Delete'] = 'Delete';
 $lang['Deleted'] = 'Deleted!';
+$lang['Description'] = 'Description';
+$lang['Details'] = 'Details';
 //E
 $lang['Edit'] = 'Edit';
 $lang['Email'] = 'Email';
@@ -29,25 +36,34 @@ $lang['Email'] = 'Email';
 $lang['Home'] = 'Home';
 //I
 //J
+//K
+$lang['KRS'] = 'KRS';
 //L
-$lang['List_of_projects'] = 'List of projects';
 $lang['Leave_a_message'] = 'Leave a message';
+$lang['List_of_customers'] = 'List of customers';
+$lang['List_of_payments'] = 'List of payments';
+$lang['List_of_projects'] = 'List of projects';
 //M
 //N
 $lang['Name'] = 'Name';
+$lang['NIP'] = 'NIP';
 //O
 //P
 $lang['Password_changed'] = 'Password changed!';
-$lang['Person'] = 'Person';
+$lang['Phone'] = 'Phone';
+$lang['Post_code'] = 'Post code';
 $lang['Price'] = 'Price';
 $lang['Profile'] = 'Profile';
 $lang['Projects'] = 'Projects';
+$lang['Payments'] = 'Payments';
 //Q
 //R
+$lang['REGON'] = 'REGON';
 //S
 $lang['Save'] = 'Save';
 $lang['Search'] = 'Search';
 $lang['Show'] = 'Show';
+$lang['Status'] = 'Status';
 //T
 //U
 $lang['Update'] = 'Update';

@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ base_url('/') }}">{{ lang('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ base_url('/dashboard') }}">{{ lang('Dashboard') }}</a></li>
                         <li class="breadcrumb-item"><a href="{{ base_url('/projects') }}">{{ lang('Projects') }}</a></li>
                         <li class="breadcrumb-item active">{{ lang('Edit') }}</li>
                     </ol>
@@ -33,8 +33,8 @@
                         <input type="text" name="name" class="form-control" id="nameInput" value="{{ set_value('name', project.name) }}">
                     </div>
                     <div class="form-group">
-                        <label for="personInput">{{ lang('Person') }}</label>
-                        <input type="text" name="person" class="form-control" id="personInput" value="{{ set_value('person', project.person) }}">
+                        <label for="personInput">{{ lang('Commissioned_by') }}</label>
+                        <input type="text" name="commissioned_by" class="form-control" id="personInput" value="{{ set_value('commissioned_by', project.commissioned_by) }}">
                     </div>
                     <div class="form-group">
                         <label for="descriptionInput">{{ lang('Description') }}</label>

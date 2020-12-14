@@ -7,7 +7,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
 class ProjectModel extends Eloquent
 {
     protected $table = 'projects';
-    protected $fillable = ['name', 'person', 'description', 'details', 'price', 'customer_id', 'user_id'];
+    protected $fillable = ['name', 'commissioned_by', 'description', 'details', 'price', 'status', 'customer_id', 'user_id'];
 
     public function customer()
     {

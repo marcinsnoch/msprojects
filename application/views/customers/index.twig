@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ base_url('/') }}">{{ lang('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ base_url('/dashboard') }}">{{ lang('Dashboard') }}</a></li>
                         <li class="breadcrumb-item active">{{ title }}</li>
                     </ol>
                 </div>
@@ -23,11 +23,14 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ lang('List_of_projects') }}</h3>
+                    <h3 class="card-title">
+                        <i class="fa fa-users"></i>
+                        {{ lang('List_of_customers') }}
+                    </h3>
                 </div>
                 <div class="card-body">
                     <div id="toolbar">
-                        <a href="{{ base_url('/customers/create') }}" class="btn btn-default">
+                        <a href="{{ base_url('/customers/create') }}" class="btn btn-primary">
                             <i class="fas fa-plus-circle"></i> {{ lang('Create_new') }}
                         </a>
                     </div>
@@ -39,9 +42,9 @@
                                     <th data-field="name">{{ lang('Name') }}</th>
                                     <th data-field="email" data-formatter="emailFormatter">{{ lang('Email') }}</th>
                                     <th data-field="website" data-formatter="websiteFormatter">{{ lang('Website') }}</th>
+                                    <th data-field="krs">KRS</th>
                                     <th data-field="nip">NIP</th>
                                     <th data-field="regon">REGON</th>
-                                    <th data-field="krs">KRS</th>
                                     <th data-field="id" data-formatter="openFormatter" data-width="105">{{ lang('Actions') }}</th>
                                 </tr>
                             </thead>

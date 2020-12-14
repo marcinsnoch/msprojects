@@ -7,6 +7,7 @@ use \Illuminate\Database\Eloquent\Model as Eloquent;
 class CustomerModel extends Eloquent
 {
     protected $table = 'customers';
+    protected $fillable = ['name', 'email', 'website', 'krs', 'nip', 'regon', 'address_id'];
 
     public function address()
     {

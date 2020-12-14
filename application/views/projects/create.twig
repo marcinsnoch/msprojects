@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ base_url('/') }}">{{ lang('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ base_url('/dashboard') }}">{{ lang('Dashboard') }}</a></li>
                         <li class="breadcrumb-item"><a href="{{ base_url('/projects') }}">{{ lang('Projects') }}</a></li>
                         <li class="breadcrumb-item active">{{ lang('Create') }}</li>
                     </ol>
@@ -24,7 +24,10 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ lang('Create_new') }}</h3>
+                    <h3 class="card-title">
+                        <i class="far fa-edit"></i>
+                        {{ lang('Create_new') }}
+                    </h3>
                 </div>
                 {{ form_open() }}
                 <div class="card-body">
@@ -44,9 +47,9 @@
                         {{ form_error('name') }}
                     </div>
                     <div class="form-group">
-                        <label for="personInput">{{ lang('Person') }}</label>
-                        <input type="text" name="person" class="form-control{{ form_error('person') ? ' is-invalid'}}" id="personInput" value="{{ set_value('person') }}">
-                        {{ form_error('person') }}
+                        <label for="personInput">{{ lang('Commissioned_by') }}</label>
+                        <input type="text" name="commissioned_by" class="form-control{{ form_error('commissioned_by') ? ' is-invalid'}}" id="personInput" value="{{ set_value('commissioned_by') }}">
+                        {{ form_error('commissioned_by') }}
                     </div>
                     <div class="form-group">
                         <label for="descriptionInput">{{ lang('Description') }}</label>

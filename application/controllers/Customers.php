@@ -26,53 +26,6 @@ class Customers extends MY_Controller
         $this->twig->display('customers/create');
     }
 
-    // public function ajax_create()
-    // {
-    //     if (!$this->input->is_ajax_request()) {
-    //         show_404();
-    //     }
-
-    //     $data = [
-    //         'project_id' => $this->input->post('project_id'),
-    //         'body' => $this->input->post('body'),
-    //         'user_id' => $this->input->post('user_id') ?? $this->session->user_id,
-    //     ];
-
-    //     if (CommentModel::create($data)) {
-    //         return $this->output->set_status_header(201);
-    //     }
-
-    //     return $this->output->set_status_header(400);
-    // }
-
-    // public function ajax_update()
-    // {
-    //     if (!$this->input->is_ajax_request()) {
-    //         show_404();
-    //     }
-    //     $comment = CommentModel::find($this->input->post('comment_id'));
-    //     if ($comment) {
-    //         $comment->body = $this->input->post('body');
-    //         $comment->user_id = $this->input->post('user_id') ?? $this->session->user_id;
-    //         $comment->save();
-    //         return $this->output->set_status_header(201);
-    //     }
-    //     return $this->output->set_status_header(400);
-    // }
-
-    // public function ajax_delete()
-    // {
-    //     if (!$this->input->is_ajax_request()) {
-    //         show_404();
-    //     }
-    //     $comment = CommentModel::find($this->input->post('comment_id'));
-    //     if ($comment) {
-    //         $comment->delete();
-    //         return $this->output->set_status_header(201);
-    //     }
-    //     return $this->output->set_status_header(400);
-    // }
-
     public function table_data()
     {
         if (!$this->input->is_ajax_request()) {

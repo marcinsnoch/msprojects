@@ -10,11 +10,6 @@ class Comments extends MY_Controller
         $this->logged_in();
     }
 
-    public function index()
-    {
-        show_404();
-    }
-
     public function ajax_create()
     {
         if (!$this->input->is_ajax_request()) {

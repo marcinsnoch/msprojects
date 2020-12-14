@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ base_url('/') }}">{{ lang('Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ base_url('/dashboard') }}">{{ lang('Dashboard') }}</a></li>
                         <li class="breadcrumb-item"><a href="{{ base_url('/customers') }}">{{ lang('Customers') }}</a></li>
                         <li class="breadcrumb-item active">{{ lang('Show') }}</li>
                     </ol>
@@ -24,7 +24,10 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ lang('Details') }}</h3>
+                    <h3 class="card-title">
+                        <i class="far fa-file"></i>
+                        {{ lang('Details') }}
+                    </h3>
                     <div class="card-tools">
                         <div class="btn-group">
                             <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
@@ -41,35 +44,39 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <h3>{{ lang('Details') }}</h3>
-                            <p>{{ lang('Name') }}: <b>{{ customer.name }}</b></p>
+                            <h4>{{ customer.name }}</h4>
+                            <p>{{ lang('KRS') }}: {{ customer.krs }}</p>
+                            <p>{{ lang('NIP') }}: {{ customer.nip }}</p>
+                            <p>{{ lang('REGON') }}: {{ customer.regon }}</p>
                             <p>{{ lang('Email') }}: {{ customer.email }}</p>
                             <p>{{ lang('Website') }}: {{ customer.website }}</p>
                         </div>
                         <div class="col-md-6">
-                            <h3>{{ lang('Address') }}</h3>
-                            <p>{{ customer.address.address }}</p>
-                            <p>{{ customer.address.postal_code }}</p>
-                            <p>{{ customer.address.city }}</p>
-                            <p>{{ customer.address.country }}</p>
+                            <h4>{{ lang('Contact_address') }}</h4>
+                            <p>{{ lang('Contact_person') }}: {{ customer.address.name }}</p>
+                            <p>{{ lang('Phone') }}: {{ customer.address.phone }}</p>
+                            <p>{{ lang('Address') }}: {{ customer.address.address }}</p>
+                            <p>{{ lang('Post_code') }}: {{ customer.address.postcode }}</p>
+                            <p>{{ lang('City') }}: {{ customer.address.city }}</p>
+                            <p>{{ lang('Country') }}: {{ customer.address.country }}</p>
                         </div>
                     </div>
-                    <hr>
-                    <h3 class="mb-3">{{ lang('Projects') }}</h3>
+                    <h4 class="mb-3">{{ lang('Projects') }}</h4>
                     {% if customer.projects.count() > 0 %}
                     <div id="toolbar">
-                        <a href="{{ base_url('/projects/create') }}" class="btn btn-default">
+                        <a href="{{ base_url('/projects/create') }}" class="btn btn-primary">
                             <i class="fas fa-plus-circle"></i> {{ lang('Create_new') }}
                         </a>
                     </div>
                     <table id="table">
                         <thead>
                             <tr>
-                                <th data-field="id" data-formatter="#%s">ID</th>
+                                <th data-field="id" data-formatter="indexFormatter">#</th>
                                 <th data-field="created_at">{{ lang('Date') }}</th>
                                 <th data-field="name">{{ lang('Name') }}</th>
                                 <th data-field="price" data-formatter="priceFormatter">PLN</th>
-                                <th data-field="customer.name">{{ lang('Customer') }}</th>
+                                <th data-field="commissioned_by">{{ lang('Commissioned_by') }}</th>
+                                <th data-field="status">{{ lang('Status') }}</th>
                                 <th data-field="id" data-formatter="openFormatter" data-width="105">{{ lang('Actions') }}</th>
                             </tr>
                         </thead>
@@ -105,6 +112,10 @@
             toolbar: '#toolbar',
             queryParams: queryParams
         });
+
+        function indexFormatter(value, row, index) {
+            return parseInt(index) + 1;
+        }
 
         function queryParams(params) {
             params.customer_id = '{{ customer.id }}';

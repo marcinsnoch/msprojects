@@ -25,7 +25,7 @@ $config = [
     ],
     'create_project' => [
         ['field' => 'name', 'label' => 'Name', 'rules' => 'required|trim'],
-        ['field' => 'person', 'label' => 'Person', 'rules' => 'required|trim'],
+        ['field' => 'commissioned_by', 'label' => 'Commissioned_by', 'rules' => 'required|trim'],
         ['field' => 'description', 'label' => 'Description', 'rules' => 'required|trim'],
         ['field' => 'details', 'label' => 'Detail', 'rules' => 'required|trim'],
         ['field' => 'customer_id', 'label' => 'Customer', 'rules' => 'numeric|trim'],

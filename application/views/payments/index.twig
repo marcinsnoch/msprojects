@@ -1,6 +1,6 @@
 {% extends "layouts/application.twig" %}
 
-{% set title = lang('Projects') %}
+{% set title = lang('Payments') %}
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
@@ -24,8 +24,8 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
-                        <i class="fa fa-list"></i>
-                        {{ lang('List_of_projects') }}
+                        <i class="fas fa-hand-holding-usd"></i>
+                        {{ lang('List_of_payments') }}
                     </h3>
                 </div>
                 <div class="card-body">
@@ -41,7 +41,7 @@
                                     <th data-field="id" data-formatter="indexFormatter">#</th>
                                     <th data-field="created_at">{{ lang('Date') }}</th>
                                     <th data-field="name">{{ lang('Name') }}</th>
-                                    <th data-field="price" data-formatter="priceFormatter">PLN</th>
+                                    <th data-field="amount" data-formatter="amountFormatter">PLN</th>
                                     <th data-field="customer.name">{{ lang('Customer') }}</th>
                                     <th data-field="id" data-formatter="openFormatter" data-width="105">{{ lang('Actions') }}</th>
                                 </tr>
@@ -62,7 +62,7 @@
     <script>
         const $table = $('#table');
         $table.bootstrapTable({
-            url: '{{ base_url("/projects/table-data") }}',
+            url: '{{ base_url("/payments/table-data") }}',
             buttonsClass: 'btn btn-primary',
             classes: 'table table-hover',
             pageSize: 25,
@@ -79,7 +79,7 @@
             return parseInt(index) + 1;
         }
 
-        function priceFormatter(amount) {
+        function amountFormatter(amount) {
             if (amount > '0') {
                 var formatter = new Intl.NumberFormat('pl-PL', {
                     style: 'currency',
@@ -91,7 +91,7 @@
         }
 
         function openFormatter(value) {
-            return '<a href="' + base_url + 'projects/show/' + value + '" class="btn btn-link btn-sm"><i class="far fa-folder-open"></i> ' + '{{ lang('Show') }}' + '</a>';
+            return '<a href="' + base_url + 'payments/show/' + value + '" class="btn btn-link btn-sm"><i class="far fa-folder-open"></i> ' + '{{ lang('Show') }}' + '</a>';
         }
     </script>
 {% endblock %}
