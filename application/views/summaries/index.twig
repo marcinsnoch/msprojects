@@ -1,0 +1,91 @@
+{% extends "layouts/application.twig" %}
+
+{% set title = lang('Summaries') %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">{{ title }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ base_url('/dashboard') }}">{{ lang('Dashboard') }}</a></li>
+                        <li class="breadcrumb-item active">{{ title }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-clipboard-list"></i>
+                        {{ lang('List_of_summaries') }}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div id="toolbar">
+                        <a href="{{ base_url('/summaries/create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i> {{ lang('Create_new') }}
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="table">
+                            <thead>
+                                <tr>
+                                    <th data-field="id" data-formatter="indexFormatter">#</th>
+                                    <th data-field="name">{{ lang('Name') }}</th>
+                                    <th data-field="customer.name">{{ lang('Customer') }}</th>
+                                    <th data-field="" data-formatter="projectsCountFormatter">Count</th>
+                                    <th data-field="views">Views</th>
+                                    <th data-field="id" data-formatter="openFormatter" data-width="105">{{ lang('Actions') }}</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-default"><i class="fa fa-arrow-left"></i> Back</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ base_url('plugins/bootstrap-table/bootstrap-table.min.js') }}"></script>
+    <script>
+        const $table = $('#table');
+        $table.bootstrapTable({
+            url: '{{ base_url("/summaries/table-data") }}',
+            buttonsClass: 'btn btn-primary',
+            classes: 'table table-hover',
+            pageSize: 25,
+            search: true,
+            showColumns: true,
+            pagination: true,
+            sitePagination: 'client',
+            showPaginationSwitch: true,
+            showRefresh: true,
+            toolbar: '#toolbar'
+        });
+
+        function indexFormatter(value, row, index) {
+            return parseInt(index) + 1;
+        }
+        
+        function projectsCountFormatter(value, row) {
+            const projects = row.projects;
+            return projects.length;
+        }
+
+        function openFormatter(value) {
+            return '<a href="' + base_url + 'summaries/show/' + value + '" class="btn btn-link btn-sm"><i class="far fa-folder-open"></i> ' + '{{ lang('Show') }}' + '</a>';
+        }
+    </script>
+{% endblock %}

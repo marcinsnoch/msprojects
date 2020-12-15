@@ -4,6 +4,7 @@
 $lang['Actions'] = 'Actions';
 $lang['Are_you_sure'] = 'Are you sure?';
 $lang['Address'] = 'Address';
+$lang['Amount'] = 'Amount';
 //B
 $lang['Back'] = 'Back';
 //C
@@ -43,6 +44,7 @@ $lang['Leave_a_message'] = 'Leave a message';
 $lang['List_of_customers'] = 'List of customers';
 $lang['List_of_payments'] = 'List of payments';
 $lang['List_of_projects'] = 'List of projects';
+$lang['List_of_summaries'] = 'List of summaries';
 //M
 //N
 $lang['Name'] = 'Name';
@@ -58,13 +60,18 @@ $lang['Projects'] = 'Projects';
 $lang['Payments'] = 'Payments';
 //Q
 //R
+$lang['Remove'] = 'Remove';
 $lang['REGON'] = 'REGON';
 //S
 $lang['Save'] = 'Save';
 $lang['Search'] = 'Search';
 $lang['Show'] = 'Show';
 $lang['Status'] = 'Status';
+$lang['Summary'] = 'Summary';
+$lang['Summaries'] = 'Summaries';
 //T
+$lang['Total_of_views'] = 'Total of views';
+$lang['Token'] = 'Token';
 //U
 $lang['Update'] = 'Update';
 $lang['Updated'] = 'Updated!';

@@ -15,7 +15,7 @@ if (!function_exists('dump')) {
         // Add formatting
         $output = preg_replace("/\]\=\>\n(\s+)/m", '] => ', $output);
         $output = <<<EOT
-<pre style="background-color:#042027;border:none;color:#15a2e6;border-radius:0;padding:15px;">$label => $output</pre>
+<pre style="border:none;color:#15a2e6;border-radius:0;padding:15px;">$label => $output</pre>
 EOT;
         echo $output;
     }

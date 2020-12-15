@@ -1,0 +1,163 @@
+{% extends "layouts/application.twig" %}
+
+{% set title = lang('Summary') %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">{{ title }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ base_url('/dashboard') }}">{{ lang('Dashboard') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ base_url('/projects') }}">{{ lang('Projects') }}</a></li>
+                        <li class="breadcrumb-item active">{{ lang('Show') }}</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="far fa-file"></i>
+                        {{ lang('Details') }}
+                    </h3>
+                    <div class="card-tools">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <a href="{{ base_url('/summaries/edit/'~summary.id) }}" class="dropdown-item">{{ lang('Edit') }}</a>
+                                <a class="dropdown-divider"></a>
+                                <a href="{{ base_url('/summaries/delete/'~summary.id) }}" class="dropdown-item" onclick="return confirm('{{ lang('Are_you_sure') }}');">{{ lang('Delete') }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p><b>{{ lang('Name') }}</b>: {{ summary.name }}</p>
+                    <p><b>{{ lang('Description') }}</b>: {{ summary.description }}</p>
+                    <p><b>{{ lang('Total_of_views') }}</b>: {{ summary.views|default('-') }}</p>
+                    <p><b>{{ lang('Token') }}</b>: {{ summary.token }}</p>
+                    <p><b>{{ lang('Amount') }}</b>: <span id="amount" data-amount="{{ summary.projects.sum('price') }}">{{ summary.projects.sum('price')|format_currency('PLN') }}</span></p>
+                    <div id="toolbar">
+                        <button id="button" class="btn btn-danger">
+                            <i class="fa fa-trash-alt"></i>
+                            {{ lang('Remove') }}
+                        </button>
+                    </div>
+                    <table id="table">
+                        <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true">#</th>
+                                <th data-field="id" data-formatter="indexFormatter">ID</th>
+                                <th data-field="created_at">{{ lang('Date') }}</th>
+                                <th data-field="name">{{ lang('Name') }}</th>
+                                <th data-field="description">{{ lang('Description') }}</th>
+                                <th data-field="price" data-formatter="priceFormatter">PLN</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ base_url('/summaries') }}" class="btn btn-dark">
+                        <i class="fa fa-arrow-circle-left"></i> {{ lang('Back') }}
+                    </a>
+                </div>
+            </div>
+    </section>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ base_url('plugins/bootstrap-table/bootstrap-table.min.js') }}"></script>
+    <script>
+        const $table = $('#table');
+        const $button = $('#button');
+        $table.bootstrapTable({
+            url: '{{ base_url("/summaries/table-data-projects") }}',
+            buttonsClass: 'btn btn-primary',
+            classes: 'table table-hover',
+            showFooter: true,
+            pageSize: 25,
+            search: true,
+            showColumns: true,
+            pagination: true,
+            sitePagination: 'client',
+            showPaginationSwitch: true,
+            showRefresh: true,
+            toolbar: '#toolbar',
+            queryParams: queryParams
+        });
+        
+        $(function() {
+            $button.click(function () {
+                const ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+                    return row.id;
+                });
+                if (ids <= 0) {
+                    $.notify({message: 'Wybierz conajmniej jedne element'}, {type: 'warning'});
+                    return ;
+                }
+                const project_id = $('input[name="project_id"]').val();
+                $.ajax({
+                    type: "POST",
+                    url: base_url + '/summaries/ajax-remove-project',
+                    data: {
+                        'summary_id': '{{ summary.id }}',
+                        'ids': ids
+                    },
+                    success: function () {
+                        $table.bootstrapTable('remove', {
+                            field: 'id',
+                            values: ids
+                        });
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+            });
+        });
+        
+        function indexFormatter(value, row, index) {
+            return parseInt(index) + 1;
+        }
+
+        function queryParams(params) {
+            params.summary_id = '{{ summary.id }}';
+            return params;
+        }
+
+        function priceFormatter(amount) {
+            if (amount > '0') {
+                var formatter = new Intl.NumberFormat('pl-PL', {
+                    style: 'currency',
+                    currency: 'PLN'
+                });
+                return formatter.format(amount);
+            }
+            return '-';
+        }
+        
+//        const formatter = new Intl.NumberFormat('pl-PL', {
+//                style: 'currency',
+//                currency: 'PLN'
+//            });
+//            const amount = $('#amount').data('amount');
+//            const taxes = $table.bootstrapTable('getData');
+//            var totalTaxes = taxes.reduce(function (sum, tax) {
+//                return sum + tax.price;
+//            }, 0);
+//            console.log(totalTaxes);
+//            if (parseFloat(amount) > 0) {
+//                $('#amount').html = formatter.format(amount);
+//            }
+    </script>
+{% endblock %}

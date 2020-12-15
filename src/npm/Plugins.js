@@ -4,6 +4,11 @@ const Plugins = [
         from: "node_modules/admin-lte/dist",
         to: "public/plugins/admin-lte"
     },
+    // Animate CSS
+    {
+        from: "node_modules/animate.css/",
+        to: "public/plugins/animate.css"
+    },
     // Bootstrap
     {
         from: "node_modules/bootstrap/dist",
@@ -12,16 +17,16 @@ const Plugins = [
     // Bootstrap notify
     {
         from: "node_modules/bootstrap-notify/bootstrap-notify.js",
-        to: "public/plugins/bootstrap-notify/bootstrap-notify.js",
+        to: "public/plugins/bootstrap-notify/bootstrap-notify.js"
     },
     {
         from: "node_modules/bootstrap-notify/bootstrap-notify.min.js",
-        to: "public/plugins/bootstrap-notify/bootstrap-notify.min.js",
+        to: "public/plugins/bootstrap-notify/bootstrap-notify.min.js"
     },
     // Bootstrap Table
     {
         from: "node_modules/bootstrap-table/dist",
-        to: "public/plugins/bootstrap-table",
+        to: "public/plugins/bootstrap-table"
     },
     // Font Awesome
     {
