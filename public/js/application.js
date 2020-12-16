@@ -1,7 +1,7 @@
 const baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
 $.notifyDefaults({
-    delay: 1000,
+    delay: 2000,
     z_index: 1050,
     placement: {
         align: 'center'
@@ -9,11 +9,18 @@ $.notifyDefaults({
     allow_dismiss: true,
     newest_on_top: true,
     animate: {
-        enter: 'animate__animated animate__fadeInDown',
-        exit: 'animate__animated animate__fadeOutUp'
+        enter: 'animated fadeInDown',
+        exit: 'animated fadeOutUp'
     }
 });
 
 $(function () {
-    $('.nav a[href="' + window.location.href + '"]').addClass("active");
+    const url = window.location;
+    const menu = url.pathname.split("/");
+    if (menu.length > 2) {
+        $('.nav a[href="' + url.origin + '/' + menu[1] + '"]').addClass("active");
+    } else {
+        $('.nav a[href="' + url.href + '"]').addClass("active");
+    }
+    console.log(menu);
 });

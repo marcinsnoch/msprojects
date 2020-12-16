@@ -102,7 +102,7 @@
                     return row.id;
                 });
                 if (ids <= 0) {
-                    $.notify({message: 'Wybierz conajmniej jedne element'}, {type: 'warning'});
+                    $.notify({message: 'Select at least one element'}, {type: 'warning'});
                     return ;
                 }
                 const project_id = $('input[name="project_id"]').val();

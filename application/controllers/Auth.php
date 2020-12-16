@@ -19,10 +19,6 @@ class Auth extends MY_Controller
         $this->_logged_in();
         if ($this->input->post('login') && $this->form_validation->run('login')) {
             $user = UserModel::where('email', $this->input->post('email'))->first();
-            if (!$user) {
-                set_alert('danger', lang('Wrong_username_or_password'));
-                redirect('/login');
-            }
             if ($user->token !== null) {
                 set_alert('danger', lang('Your_account_is_not_activated'));
                 redirect('/login');
@@ -35,6 +31,7 @@ class Auth extends MY_Controller
                 $this->_login($user);
                 redirect('/dashboard');
             }
+            set_alert('danger', lang('Wrong_username_or_password'));
         }
         $this->twig->display('auth/login');
     }

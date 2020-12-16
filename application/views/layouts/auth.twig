@@ -10,6 +10,7 @@
             <link href="{{ base_url('plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
             <link href="{{ base_url('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
             <link href="{{ base_url('plugins/admin-lte/css/adminlte.min.css') }}" rel="stylesheet">
+            <link href="{{ base_url('plugins/animate.css/animate.compat.css') }}" rel="stylesheet">
             <link href="{{ base_url('css/styles.min.css') }}" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
             <title>{% block title %}{% endblock %}</title>
@@ -27,9 +28,7 @@
             <script src="{{ base_url('js/application.min.js') }}"></script>
             {% set alert = session.flashdata('alert') %}
             {% if alert %}
-                <script>
-                    $.notify({message: '{{ alert.msg }}'}, {type: '{{ alert.type }}'});
-                </script>
+                <script>$.notify({message: '{{ alert.msg }}'}, {type: '{{ alert.type }}'});</script>
             {% endif %}
         {% endblock %}
     </body>
