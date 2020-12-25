@@ -10,3 +10,4 @@ $route['logout'] = 'auth/logout';
 $route['forgot-password'] = 'auth/forgot_password';
 $route['recovery-password'] = 'auth/recovery_password';
 $route['register'] = 'auth/register';
+$route['show'] = 'home/show';

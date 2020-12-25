@@ -1,6 +1,6 @@
 {% extends "layouts/application.twig" %}
 
-{% set title = lang('Customers') %}
+{% set title = lang('Summaries') %}
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ base_url('/dashboard') }}">{{ lang('Dashboard') }}</a></li>
-                        <li class="breadcrumb-item"><a href="{{ base_url('/customers') }}">{{ lang('Customers') }}</a></li>
+                        <li class="breadcrumb-item"><a href="{{ base_url('/summaries') }}">{{ lang('Summaries') }}</a></li>
                         <li class="breadcrumb-item active">{{ lang('Create') }}</li>
                     </ol>
                 </div>
@@ -31,13 +31,42 @@
                 </div>
                 {{ form_open() }}
                 <div class="card-body">
-
+                    <div class="form-group">
+                        <label for="customerInput">{{ lang('Customer') }}</label>
+                        <select name="customer_id" class="form-control{{ form_error('customer_id') ? ' is-invalid' }}" id="customerInput">
+                            <option value=""></option>
+                            {% for customer in customers %}
+                                <option value="{{ customer.id }}" {{ set_select('customer_id', customer.id, summary.customer_id == customer.id ?? true ) }}>{{ customer.name }}</option>
+                            {% endfor %}
+                        </select>
+                        {{ form_error('customer_id') }}
+                    </div>
+                    <div class="form-group">
+                        <label for="nameInput">{{ lang('Name') }}</label>
+                        <input type="text" name="name" class="form-control{{ form_error('name') ? ' is-invalid' }}" id="nameInput" value="{{ set_value('name', summary.name) }}">
+                        {{ form_error('name') }}
+                    </div>
+                    <div class="form-group">
+                        <label for="descriptionInput">{{ lang('Description') }}</label>
+                        <textarea name="description" class="form-control{{ form_error('description') ? ' is-invalid' }}" id="descriptionInput" rows="3">{{ set_value('description', summary.description) }}</textarea>
+                        {{ form_error('description') }}
+                    </div>
+                    <div class="form-group">
+                        <label for="tokenInput">{{ lang('Token') }} (<a href="#" id="tokenGenerator">Generate token</a>)</label>
+                        <input type="text" name="token" class="form-control{{ form_error('token') ? ' is-invalid' }}" id="tokenInput" value="{{ set_value('token', summary.token) }}">
+                        {{ form_error('token') }}
+                    </div>
+                    <div class="form-group">
+                        <label for="viewsInput">{{ lang('Total_views') }}</label>
+                        <input type="number" name="views" class="form-control{{ form_error('views') ? ' is-invalid' }}" id="viewsInput" value="{{ set_value('views', summary.views) }}">
+                        {{ form_error('views') }}
+                    </div>
                 </div>
                 <div class="card-footer">
-                    <a href="{{ base_url('/projects') }}" class="btn btn-default">
+                    <a href="{{ base_url('/summaries/show/'~summary.id) }}" class="btn btn-default">
                         <i class="fa fa-times"></i> {{ lang('Cancel') }}
                     </a>
-                    <button type="submit" name="create_customer" value="true" class="btn btn-primary float-right">
+                    <button type="submit" name="update_summary" value="true" class="btn btn-primary float-right">
                         <i class="fa fa-save"></i> {{ lang('Save') }}
                     </button>
                 </div>
@@ -54,7 +83,7 @@
             const body = $('#commentId-' + comment_id).val();
             $.ajax({
                 type: "POST",
-                url: baseUrl + '/comments/ajax-update',
+                url: '/comments/ajax-update',
                 data: {
                     "comment_id": comment_id,
                     "body": body

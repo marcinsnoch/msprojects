@@ -1,6 +1,6 @@
 {% extends "layouts/application.twig" %}
 
-{% set title = lang('Projects') %}
+{% set title = lang('Summary') %}
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
@@ -13,7 +13,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ base_url('/dashboard') }}">{{ lang('Dashboard') }}</a></li>
-                        <li class="breadcrumb-item active">{{ title }}</li>
+                        <li class="breadcrumb-item"><a href="{{ base_url('/projects') }}">{{ lang('Projects') }}</a></li>
+                        <li class="breadcrumb-item active">{{ lang('Show') }}</li>
                     </ol>
                 </div>
             </div>
@@ -24,15 +25,16 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
-                        <i class="fa fa-list"></i>
-                        {{ lang('List_of_projects') }}
+                        <i class="far fa-file"></i>
+                        {{ lang('Details') }}
                     </h3>
                 </div>
                 <div class="card-body">
                     <div id="toolbar" class="form-inline">
-                        <a href="{{ base_url('/projects/create') }}" class="btn btn-primary">
-                            <i class="fas fa-plus-circle"></i> {{ lang('Create_new') }}
-                        </a>&nbsp;
+                        <button id="button" class="btn btn-primary">
+                            <i class="fa fa-edit"></i>
+                            {{ lang('Update') }}
+                        </button>&nbsp;
                         <div class="form-group">
                             <select name="customer" id="customerInput" class="form-control">
                                 <option value="">--{{ lang('Customer') }}--</option>
@@ -57,11 +59,12 @@
                         <table id="table">
                             <thead>
                                 <tr>
-                                    <th data-field="id" data-formatter="indexFormatter">#</th>
+                                    <th data-field="state" data-checkbox="true">#</th>
+                                    <th data-field="id" data-formatter="indexFormatter">ID</th>
                                     <th data-field="created_at">{{ lang('Date') }}</th>
                                     <th data-field="name">{{ lang('Name') }}</th>
                                     <th data-field="price" data-formatter="priceFormatter">PLN</th>
-                                    <th data-field="status" data-formatter="statusFormatter">Status</th>
+                                    <th data-field="status">Status</th>
                                     <th data-field="customer.name">{{ lang('Customer') }}</th>
                                     <th data-field="id" data-formatter="openFormatter" data-width="105">{{ lang('Actions') }}</th>
                                 </tr>
@@ -70,10 +73,11 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-default"><i class="fa fa-arrow-left"></i> Back</a>
+                    <a href="{{ base_url('/summaries') }}" class="btn btn-dark">
+                        <i class="fa fa-arrow-circle-left"></i> {{ lang('Back') }}
+                    </a>
                 </div>
             </div>
-        </div>
     </section>
 {% endblock %}
 {% block scripts %}
@@ -81,10 +85,16 @@
     <script src="{{ base_url('plugins/bootstrap-table/bootstrap-table.min.js') }}"></script>
     <script>
         const $table = $('#table');
+        const $button = $('#button');
+        const formatPrice = new Intl.NumberFormat('pl-PL', {
+            style: 'currency',
+            currency: 'PLN'
+        });
         $table.bootstrapTable({
             url: baseUrl + "/projects/table-data",
             buttonsClass: 'btn btn-primary',
             classes: 'table table-hover',
+            showFooter: true,
             pageSize: 25,
             search: true,
             showColumns: true,
@@ -103,24 +113,43 @@
         $("#customerInput, #statusInput").on("change", function() {
             $table.bootstrapTable("refresh");
         });
+        $table.on('check.bs.table', function (e, value, row, index) {
+            console.log(value.id);
+        });
         function indexFormatter(value, row, index) {
             return parseInt(index) + 1;
         }
-        function statusFormatter(value) {
-            return value.charAt(0).toUpperCase() + value.slice(1);
-        }
         function priceFormatter(amount) {
-            if (amount > '0') {
-                var formatter = new Intl.NumberFormat('pl-PL', {
-                    style: 'currency',
-                    currency: 'PLN'
+            return formatPrice.format(amount);
+        }
+        $(function() {
+            $button.click(function () {
+                const ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+                    return row.id;
                 });
-                return formatter.format(amount);
-            }
-            return '-';
-        }
-        function openFormatter(value) {
-            return '<a href="' + baseUrl + '/projects/show/' + value + '" class="btn btn-link btn-sm"><i class="far fa-folder-open"></i> ' + '{{ lang('Show') }}' + '</a>';
-        }
+                if (ids <= 0) {
+                    $.notify({message: 'Select at least one element'}, {type: 'warning'});
+                    return ;
+                }
+                $table.bootstrapTable('checkBy', {field: 'id', values: [98, 105, 106]});
+                $.ajax({
+                    type: "POST",
+                    url: baseUrl + '/summaries/ajax-remove-project',
+                    data: {
+                        'summary_id': '{{ summary.id }}',
+                        'ids': ids
+                    },
+                    success: function () {
+                        $table.bootstrapTable('remove', {
+                            field: 'id',
+                            values: ids
+                        });
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+            });
+        });
     </script>
 {% endblock %}

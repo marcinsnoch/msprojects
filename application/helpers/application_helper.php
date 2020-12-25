@@ -3,7 +3,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 if (!function_exists('array_from_post')) {
-    function array_from_post(array $fields)
+    function array_from_post(array $fields, $return_null = true)
     {
         $ci = &get_instance();
         $data = [];
@@ -12,7 +12,7 @@ if (!function_exists('array_from_post')) {
             $input = $ci->input->post($field);
 
             if ($input == '' || $input == false) {
-                $data[$field] = null;
+                $return_null ? $data[$field] = null : '';
             } else {
                 $data[$field] = $input;
             }

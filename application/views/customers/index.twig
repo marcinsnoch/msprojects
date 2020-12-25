@@ -64,7 +64,7 @@
     <script>
         const $table = $('#table');
         $table.bootstrapTable({
-            url: '{{ base_url("/customers/table-data") }}',
+            url: baseUrl + "/customers/table-data",
             buttonsClass: 'btn btn-primary',
             classes: 'table table-hover',
             pageSize: 25,
@@ -78,16 +78,22 @@
         });
 
         function emailFormatter(row) {
-            return '<a href="mailto:' + row + '" class="btn btn-link">' + row + '</a>';
+            if (row) {
+                return '<a href="mailto:' + row + '" class="btn btn-link">' + row + '</a>';
+            }
+            return '-';
         }
 
         function websiteFormatter(row) {
-            const address = (row.substr(0, 4) === 'http' ? '' : 'http://') + row;
-            return '<a href="'+ address +'" class="btn btn-link" title="' + row + '">' + row + '</a>';
+            if (row) {
+                const address = (row.substr(0, 4) === 'http' ? '' : 'http://') + row;
+                return '<a href="'+ address +'" class="btn btn-link" title="' + row + '">' + row + '</a>';
+            }
+            return '-';
         }
 
         function openFormatter(value) {
-            return '<a href="' + base_url + 'customers/show/' + value + '" class="btn btn-link btn-sm"><i class="far fa-folder-open"></i> ' + '{{ lang('Show') }}' + '</a>';
+            return '<a href="' + baseUrl + '/customers/show/' + value + '" class="btn btn-link btn-sm"><i class="far fa-folder-open"></i> ' + '{{ lang('Show') }}' + '</a>';
         }
     </script>
 {% endblock %}

@@ -1,5 +1,6 @@
 const baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
+// bootstrap-notify default settings
 $.notifyDefaults({
     delay: 2000,
     z_index: 1050,
@@ -14,6 +15,7 @@ $.notifyDefaults({
     }
 });
 
+// set menu active class
 $(function () {
     const url = window.location;
     const menu = url.pathname.split("/");
@@ -22,5 +24,20 @@ $(function () {
     } else {
         $('.nav a[href="' + url.href + '"]').addClass("active");
     }
-    console.log(menu);
+});
+
+// token generator
+const generateToken = (length = 64) => {
+    // Declare all characters
+    let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    // Pick characers randomly
+    let str = '';
+    for (let i = 0; i < length; i++) {
+        str += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return str;
+};
+// input token
+$('#tokenGenerator').on('click', function() {
+    $('#tokenInput').val(generateToken());
 });

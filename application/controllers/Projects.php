@@ -13,7 +13,8 @@ class Projects extends MY_Controller
 
     public function index()
     {
-        $this->twig->display('projects/index');
+        $customers = CustomerModel::get(['id', 'name']);
+        $this->twig->display('projects/index', compact('customers'));
     }
 
     public function show($id = null)
@@ -38,6 +39,7 @@ class Projects extends MY_Controller
     public function edit($id = null)
     {
         $project = ProjectModel::with('customer', 'comments.user')->find($id);
+        // update
         $this->twig->display('projects/edit', compact('project'));
     }
 
@@ -54,16 +56,28 @@ class Projects extends MY_Controller
             show_404();
         }
 
+        $projects = ProjectModel::with('customer');
         if ($this->input->get('customer_id')) {
-            $projects = ProjectModel::with('customer')
-                ->orderBy('created_at', 'desc')
-                ->where('customer_id', $this->input->get('customer_id'))->get();
-        } else {
-            $projects = ProjectModel::with('customer')->orderBy('created_at', 'desc')->get();
+            $projects->where('customer_id', $this->input->get('customer_id'))->get();
         }
-
+        if ($this->input->get('status')) {
+            $projects->where('status', $this->input->get('status'))->get();
+        }
+        $projects->orderBy('created_at', 'desc');
         $this->output
                 ->set_content_type('application/json')
-                ->set_output(json_encode($projects));
+                ->set_output(json_encode($projects->get()));
+    }
+
+    public function ajax_update()
+    {
+        $data = array_from_post(['name', 'commissioned_by', 'description', 'details', 'price', 'status', 'customer_id'], false);
+        $project = ProjectModel::find($this->input->post('project_id'));
+        $project->update($data);
+        if ($project->save()) {
+            set_alert('success', lang('Updated'));
+            return $this->output->set_status_header(201);
+        }
+        return $this->output->set_status_header(400);
     }
 }

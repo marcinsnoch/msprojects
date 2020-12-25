@@ -20,6 +20,7 @@ $lang['Create'] = 'Create';
 $lang['Created'] = 'Created!';
 $lang['Customer'] = 'Customer';
 $lang['Customers'] = 'Customers';
+$lang['Canceled'] = 'Canceled';
 //D
 $lang['Dashboard'] = 'Dashboard';
 $lang['Date_of_created'] = 'Date of created';
@@ -30,9 +31,13 @@ $lang['Deleted'] = 'Deleted!';
 $lang['Description'] = 'Description';
 $lang['Details'] = 'Details';
 //E
+$lang['Edit_projects_list'] = 'Edit projects list';
+$lang['Edit_summary'] = 'Edit summary';
 $lang['Edit'] = 'Edit';
 $lang['Email'] = 'Email';
 //F
+$lang['Finish'] = 'Finish';
+$lang['Finished'] = 'Finished';
 //H
 $lang['Home'] = 'Home';
 //I
@@ -48,6 +53,7 @@ $lang['List_of_summaries'] = 'List of summaries';
 //M
 //N
 $lang['Name'] = 'Name';
+$lang['New'] = 'New';
 $lang['NIP'] = 'NIP';
 //O
 //P
@@ -61,6 +67,7 @@ $lang['Payments'] = 'Payments';
 //Q
 //R
 $lang['Remove'] = 'Remove';
+$lang['Realized'] = 'Realized';
 $lang['REGON'] = 'REGON';
 //S
 $lang['Save'] = 'Save';
@@ -70,11 +77,12 @@ $lang['Status'] = 'Status';
 $lang['Summary'] = 'Summary';
 $lang['Summaries'] = 'Summaries';
 //T
-$lang['Total_of_views'] = 'Total of views';
+$lang['Total_views'] = 'Total views';
 $lang['Token'] = 'Token';
 //U
 $lang['Update'] = 'Update';
 $lang['Updated'] = 'Updated!';
+$lang['Unpaid'] = 'Unpaid';
 //V
 //Y
 //W

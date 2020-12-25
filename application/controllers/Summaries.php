@@ -13,7 +13,21 @@ class Summaries extends MY_Controller
 
     public function index()
     {
+        // dd($token = bin2hex(random_bytes(40)));
         $this->twig->display('summaries/index');
+    }
+
+    function create()
+    {
+        $customers = CustomerModel::get(['name', 'id']);
+        if ($this->input->post('create_summary') && $this->form_validation->run('create_summary')) {
+            $data = array_from_post(['name', 'description', 'token', 'customer_id']);
+            $data['user_id'] = $this->session->user_id;
+            SummaryModel::create($data);
+            set_alert('success', lang('Created'));
+            redirect('/summaries');
+        }
+        $this->twig->display('summaries/create', compact('customers'));
     }
 
     public function show($id = null)
@@ -21,12 +35,30 @@ class Summaries extends MY_Controller
         $summary = SummaryModel::with('projects')->find($id);
         $this->twig->display('summaries/show', compact('summary'));
     }
-    
+
     public function edit($id)
     {
-        
+        $customers = CustomerModel::get(['name', 'id']);
+        $summary = SummaryModel::with('projects')->find($id);
+        if ($this->input->post('update_summary') && $this->form_validation->run('update_summary')) {
+            $summary->name = $this->input->post('name');
+            $summary->description = $this->input->post('description');
+            $summary->token = $this->input->post('token');
+            $summary->views = $this->input->post('views');
+            $summary->save();
+            set_alert('success', lang('Updated'));
+            redirect('/summaries/show/' . $id);
+        }
+        $this->twig->display('summaries/edit', compact('customers', 'summary'));
     }
-    
+
+    public function edit_projects($id)
+    {
+        $customers = CustomerModel::get(['id', 'name']);
+        $summary = SummaryModel::with('projects')->find($id);
+        $this->twig->display('summaries/edit_projects', compact('summary', 'customers'));
+    }
+
     public function delete($id)
     {
         $summary = SummaryModel::find($id);
@@ -57,7 +89,7 @@ class Summaries extends MY_Controller
                 ->set_content_type('application/json')
                 ->set_output(json_encode($summaries->projects));
     }
-    
+
     public function ajax_remove_project()
     {
         if (!$this->input->is_ajax_request()) {
@@ -68,8 +100,8 @@ class Summaries extends MY_Controller
         if ($summary_id != '' && !empty($ids)) {
             $summary = SummaryModel::find($summary_id);
             $summary->projects()->detach($ids);
-        return $this->output->set_status_header(200);
-        } 
+            return $this->output->set_status_header(201);
+        }
         return $this->output->set_status_header(400);
     }
 }

@@ -62,7 +62,7 @@
     <script>
         const $table = $('#table');
         $table.bootstrapTable({
-            url: '{{ base_url("/summaries/table-data") }}',
+            url: baseUrl + "/summaries/table-data",
             buttonsClass: 'btn btn-primary',
             classes: 'table table-hover',
             pageSize: 25,
@@ -78,14 +78,14 @@
         function indexFormatter(value, row, index) {
             return parseInt(index) + 1;
         }
-        
+
         function projectsCountFormatter(value, row) {
             const projects = row.projects;
             return projects.length;
         }
 
         function openFormatter(value) {
-            return '<a href="' + base_url + 'summaries/show/' + value + '" class="btn btn-link btn-sm"><i class="far fa-folder-open"></i> ' + '{{ lang('Show') }}' + '</a>';
+            return '<a href="' + baseUrl + '/summaries/show/' + value + '" class="btn btn-link btn-sm"><i class="far fa-folder-open"></i> ' + '{{ lang('Show') }}' + '</a>';
         }
     </script>
 {% endblock %}

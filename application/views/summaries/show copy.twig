@@ -34,12 +34,9 @@
                                 <i class="fas fa-cog"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <a href="{{ base_url('/summaries/edit/'~summary.id) }}" class="dropdown-item"><i class="fa fa-edit"></i> {{ lang('Edit_summary') }}</a>
-                                <a href="{{ base_url('/summaries/edit-projects/'~summary.id) }}" class="dropdown-item"><i class="fa fa-list"></i> {{ lang('Edit_projects_list') }}</a>
+                                <a href="{{ base_url('/summaries/edit/'~summary.id) }}" class="dropdown-item">{{ lang('Edit') }}</a>
                                 <a class="dropdown-divider"></a>
-                                <a href="{{ base_url('/summaries/delete/'~summary.id) }}" class="dropdown-item" onclick="return confirm('{{ lang('Are_you_sure') }}');">
-                                    <span class="text-red"><i class="fa fa-trash"></i> {{ lang('Delete') }}</span>
-                                </a>
+                                <a href="{{ base_url('/summaries/delete/'~summary.id) }}" class="dropdown-item" onclick="return confirm('{{ lang('Are_you_sure') }}');">{{ lang('Delete') }}</a>
                             </div>
                         </div>
                     </div>
@@ -53,10 +50,17 @@
                         <a href="{{ base_url('/show?token=')~summary.token }}" target="_blank">{{ summary.token }}</a>
                     </p>
                     <p><b>{{ lang('Amount') }}</b>: <span id="amount" data-amount="{{ summary.projects.sum('price') }}">N/A</span></p>
+                    <div id="toolbar">
+                        <button id="button" class="btn btn-danger">
+                            <i class="fa fa-trash-alt"></i>
+                            {{ lang('Remove') }}
+                        </button>
+                    </div>
                     <table id="table">
                         <thead>
                             <tr>
-                                <th data-field="id" data-formatter="indexFormatter">#</th>
+                                <th data-field="state" data-checkbox="true">#</th>
+                                <th data-field="id" data-formatter="indexFormatter">ID</th>
                                 <th data-field="created_at">{{ lang('Date') }}</th>
                                 <th data-field="name">{{ lang('Name') }}</th>
                                 <th data-field="description">{{ lang('Description') }}</th>
@@ -85,7 +89,7 @@
             currency: 'PLN'
         });
         $table.bootstrapTable({
-            url: baseUrl + "/summaries/table-data-projects",
+            url: '{{ base_url("/summaries/table-data-projects") }}',
             buttonsClass: 'btn btn-primary',
             classes: 'table table-hover',
             showFooter: true,
@@ -109,6 +113,40 @@
         function priceFormatter(amount) {
             return formatPrice.format(amount);
         }
+        $(function() {
+            $button.click(function () {
+                const ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+                    return row.id;
+                });
+                const tableAmount = $.map($table.bootstrapTable('getSelections'), function (row) {
+                    return row.price;
+                });
+                const tableAmountSum = tableAmount.reduce((a, b) => a + b, 0);
+                if (ids <= 0) {
+                    $.notify({message: 'Select at least one element'}, {type: 'warning'});
+                    return ;
+                }
+                const project_id = $('input[name="project_id"]').val();
+                $.ajax({
+                    type: "POST",
+                    url: base_url + '/summaries/ajax-remove-project',
+                    data: {
+                        'summary_id': '{{ summary.id }}',
+                        'ids': ids
+                    },
+                    success: function () {
+                        $table.bootstrapTable('remove', {
+                            field: 'id',
+                            values: ids
+                        });
+                        updateAmount();
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+            });
+        });
         const updateAmount = function() {
             const priceSum = $.map($table.bootstrapTable('getData'), function (row) {
                 return row.price;

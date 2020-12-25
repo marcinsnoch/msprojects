@@ -30,6 +30,18 @@ $config = [
         ['field' => 'details', 'label' => 'Detail', 'rules' => 'required|trim'],
         ['field' => 'customer_id', 'label' => 'Customer', 'rules' => 'numeric|trim'],
     ],
+    'create_summary' => [
+        ['field' => 'name', 'label' => 'Name', 'rules' => 'required|trim'],
+        ['field' => 'description', 'label' => 'Description', 'rules' => 'required|trim'],
+        ['field' => 'token', 'label' => 'Detail', 'rules' => 'required|trim'],
+        ['field' => 'customer_id', 'label' => 'Customer', 'rules' => 'required|numeric|trim'],
+    ],
+    'update_summary' => [
+        ['field' => 'name', 'label' => 'Name', 'rules' => 'required|trim'],
+        ['field' => 'description', 'label' => 'Description', 'rules' => 'required|trim'],
+        ['field' => 'token', 'label' => 'Detail', 'rules' => 'required|trim'],
+        ['field' => 'customer_id', 'label' => 'Customer', 'rules' => 'required|numeric|trim'],
+    ],
 ];
 
 $config['error_prefix'] = '<div class="invalid-feedback">';

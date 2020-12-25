@@ -33,8 +33,21 @@
                         <input type="text" name="name" class="form-control" id="nameInput" value="{{ set_value('name', project.name) }}">
                     </div>
                     <div class="form-group">
+                        <label for="nameInput">{{ lang('Status') }}</label>
+                        {% set statues = ['new', 'realized', 'unpaid', 'finished', 'canceled'] %}
+                        <select name="status" id="selectStatus" class="form-control">
+                        {% for status in statues %}
+                            <option value="{{ status }}" {{ set_select('status', status, project.status == status ?? true) }}>{{ status|title }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="personInput">{{ lang('Commissioned_by') }}</label>
                         <input type="text" name="commissioned_by" class="form-control" id="personInput" value="{{ set_value('commissioned_by', project.commissioned_by) }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="priceInput">{{ lang('Price') }}</label>
+                        <input type="text" name="price" class="form-control" id="priceInput" value="{{ set_value('price', project.price) }}">
                     </div>
                     <div class="form-group">
                         <label for="descriptionInput">{{ lang('Description') }}</label>
@@ -87,13 +100,12 @@
     <script>
         $("button[name=update_comment]").click(function (e) {
             e.preventDefault();
-            var url = '/comments/ajax-update';
             var comment_id = $(this).val();
             var body = $('#commentId-' + comment_id).val();
 
             $.ajax({
                 type: "POST",
-                url: url,
+                url: baseUrl + '/comments/ajax-update',
                 data: {
                     "comment_id": comment_id,
                     "body": body
@@ -108,19 +120,17 @@
         });
         $("button[name=del_comment]").click(function (e) {
             e.preventDefault();
-
-            var url = '/comments/ajax-delete';
             var comment_id = $(this).val();
 
             $.ajax({
                 type: "POST",
-                url: url,
+                url: baseUrl + "/comments/ajax-delete",
                 data: {
                     'comment_id': comment_id
                 },
                 success: function (data) {
                     $('#comment-' + comment_id).remove();
-                    $.notify({message: '{{ lang('Deleted') }}'}, {type: 'success', placement: {align: 'center'}});
+                    $.notify({ message: '{{ lang('Deleted') }}'}, { type: 'success', placement: { align: 'center'} });
                 },
                 error: function (data) {
                     console.log(data);

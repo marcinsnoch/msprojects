@@ -32,22 +32,22 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="inputEmail">Email</label>
-                        <input type="email" name="email" id="inputEmail" class="form-control{{ form_error('email') ? ' is-invalid'}}" value="{{ user.email }}" disabled="disabled">
+                        <input type="email" name="email" id="inputEmail" class="form-control{{ form_error('email') ? ' is-invalid' }}" value="{{ user.email }}" disabled="disabled">
                         {{ form_error('email') }}
                     </div>
                     <div class="form-group">
                         <label for="inputFullName">Full name</label>
-                        <input type="text" name="full_name" id="inputFullName" class="form-control{{ form_error('full_name') ? ' is-invalid'}}" value="{{ set_value('full_name', user.full_name) }}">
+                        <input type="text" name="full_name" id="inputFullName" class="form-control{{ form_error('full_name') ? ' is-invalid' }}" value="{{ set_value('full_name', user.full_name) }}">
                         {{ form_error('full_name') }}
                     </div>
                     <div class="form-group">
                         <label for="inputPassword">Password</label>
-                        <input type="password" name="password" id="inputPassword" class="form-control{{ form_error('password') ? ' is-invalid'}}" placeholder="Password">
+                        <input type="password" name="password" id="inputPassword" class="form-control{{ form_error('password') ? ' is-invalid' }}" placeholder="Password">
                         {{ form_error('password') }}
                     </div>
                     <div class="form-group">
                         <label for="inputConfirmPassword">Confirm password</label>
-                        <input type="password" name="confirm_password" id="inputConfirmPassword" class="form-control{{ form_error('confirm_password') ? ' is-invalid'}}" placeholder="Confirm password">
+                        <input type="password" name="confirm_password" id="inputConfirmPassword" class="form-control{{ form_error('confirm_password') ? ' is-invalid' }}" placeholder="Confirm password">
                         {{ form_error('confirm_password') }}
                     </div>
                 </div>

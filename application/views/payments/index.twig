@@ -62,7 +62,7 @@
     <script>
         const $table = $('#table');
         $table.bootstrapTable({
-            url: '{{ base_url("/payments/table-data") }}',
+            url: baseUrl + "/payments/table-data",
             buttonsClass: 'btn btn-primary',
             classes: 'table table-hover',
             pageSize: 25,
@@ -91,7 +91,7 @@
         }
 
         function openFormatter(value) {
-            return '<a href="' + base_url + 'payments/show/' + value + '" class="btn btn-link btn-sm"><i class="far fa-folder-open"></i> ' + '{{ lang('Show') }}' + '</a>';
+            return '<a href="' + baseUrl + '/payments/show/' + value + '" class="btn btn-link btn-sm"><i class="far fa-folder-open"></i> ' + '{{ lang('Show') }}' + '</a>';
         }
     </script>
 {% endblock %}

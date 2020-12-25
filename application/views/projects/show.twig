@@ -29,6 +29,11 @@
                         {{ lang('Details') }}
                     </h3>
                     <div class="card-tools">
+                    {% if project.status not in ['finished', 'canceled'] %}
+                        <button type="button" class="btn btn-tool" id="finishButton" data-project-id="{{ project.id }}">
+                            <i class="fa fa-thumbs-up"></i> {{ lang('Finish') }}
+                        </button>
+                    {% endif %}
                         <div class="btn-group">
                             <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
                                 <i class="fas fa-wrench"></i>
@@ -47,6 +52,7 @@
                         <p>{{ lang('Description') }}: {{ project.description }}</p>
                         <p>{{ lang('Commissioned_by') }}: {{ project.commissioned_by }}</p>
                         <p>{{ lang('Price') }}: {{ project.price|format_currency('PLN') }}</p>
+                        <p>{{ lang('Status') }}: {{ project.status|title }}</p>
                     </ul>
                     <h3 class="h4 pb-3">{{ lang('Details') }}</h3>
                     <p class="pb-3">{{ project.details|default('N/A') }}</p>
@@ -92,14 +98,28 @@
         $("#commentForm").submit(function (e) {
             e.preventDefault();
             const form = $(this);
-            const url = form.attr('action');
             const project_id = $('input[name="project_id"]').val();
             $.ajax({
                 type: "POST",
-                url: url,
+                url: form.attr('action'),
                 data: form.serialize(),
                 success: function (data) {
                     window.location.replace('/projects/show/' + project_id);
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+        $("#finishButton").on("click", function(e){
+            e.preventDefault();
+            const projectId = $(this).data('projectId');
+            $.ajax({
+                type: "POST",
+                url: baseUrl + '/projects/ajax-update',
+                data: {'project_id': projectId, 'status': 'finished'},
+                success: function (data) {
+                    window.location.replace('/projects/show/' + projectId);
                 },
                 error: function (data) {
                     console.log(data);
