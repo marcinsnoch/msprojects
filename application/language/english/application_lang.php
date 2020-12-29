@@ -77,7 +77,9 @@ $lang['Status'] = 'Status';
 $lang['Summary'] = 'Summary';
 $lang['Summaries'] = 'Summaries';
 //T
+$lang['Total_amount'] = 'Total amount';
 $lang['Total_views'] = 'Total views';
+$lang['Total_of_projects'] = 'Total of projects';
 $lang['Token'] = 'Token';
 //U
 $lang['Update'] = 'Update';
