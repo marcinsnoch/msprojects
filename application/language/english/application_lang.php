@@ -45,6 +45,7 @@ $lang['Home'] = 'Home';
 //K
 $lang['KRS'] = 'KRS';
 //L
+$lang['Login'] = 'Login';
 $lang['Leave_a_message'] = 'Leave a message';
 $lang['List_of_customers'] = 'List of customers';
 $lang['List_of_payments'] = 'List of payments';
@@ -64,6 +65,7 @@ $lang['Price'] = 'Price';
 $lang['Profile'] = 'Profile';
 $lang['Projects'] = 'Projects';
 $lang['Payments'] = 'Payments';
+$lang['Person'] = 'Person';
 //Q
 //R
 $lang['Remove'] = 'Remove';

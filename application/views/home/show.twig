@@ -1,57 +1,67 @@
-{% extends 'layouts/base.twig' %}
+{% extends "layouts/application.twig" %}
 
-{% set title = lang('Summary') %}
-{% block title %}
-    {{ title }}
-{% endblock %}
+{% set title = lang('List_of_projects') %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="py-5 text-center">
-            <img class="d-block mx-auto mb-4" src="{{ site_url('img/logo.svg') }}" alt="" width="72" height="72">
-            <h2>{{ summary.name }}</h2>
-            <p class="lead">{{ summary.description|default('...') }}</p>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">{{ title }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item active">{{ title }}</li>
+                    </ol>
+                </div>
+            </div>
         </div>
-        <h4 class="mb-3">{{ lang('List_of_projects') }}</h4>
-        <div class="card">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>{{ lang('Date') }}</th>
-                        <th>{{ lang('Name') }}</th>
-                        <th>{{ lang('Description') }}</th>
-                        <th>{{ lang('Commissioned_by') }}</th>
-                        <th>{{ lang('Price') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for project in summary.projects %}
-                        <tr>
-                            <td>{{ loop.index }}</td>
-                            <td>{{ project.created_at|format_datetime('short', 'none', locale='pl') }}</td>
-                            <td>{{ project.name }}</td>
-                            <td>{{ project.description }}</td>
-                            <td>{{ project.commissioned_by }}</td>
-                            <td>{{ project.price|format_currency('PLN') }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="5" class="text-right">{{ lang('Total_amount') }}:</td>
-                        <td>{{ summary.projects.sum('price')|format_currency('PLN') }}</td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">© 2017-2020 Company Name</p>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Privacy</a></li>
-                <li class="list-inline-item"><a href="#">Terms</a></li>
-                <li class="list-inline-item"><a href="#">Support</a></li>
-            </ul>
-        </footer>
     </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fa fa-file"></i>
+                        {{ lang('Details') }}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>ID</th>
+                                <th>{{ lang('Date') }}</th>
+                                <th>{{ lang('Name') }}</th>
+                                <th>{{ lang('Description') }}</th>
+                                <th>{{ lang('Person') }}</th>
+                                <th>{{ lang('Price') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for project in summary.projects %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ '%04d'|format(project.id) }}</td>
+                                    <td>{{ project.created_at|format_datetime('short', 'none', locale='pl') }}</td>
+                                    <td>{{ project.name }}</td>
+                                    <td>{{ project.description }}</td>
+                                    <td>{{ project.commissioned_by }}</td>
+                                    <td>{{ project.price|format_currency('PLN') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-right">{{ lang('Total_amount') }}:</td>
+                                <td><strong>{{ summary.projects.sum('price')|format_currency('PLN') }}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

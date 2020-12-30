@@ -22,7 +22,7 @@ $lang['Customer'] = 'Klient';
 $lang['Customers'] = 'Klienci';
 $lang['Canceled'] = 'Anulowano';
 //D
-$lang['Dashboard'] = 'Dashboard';
+$lang['Dashboard'] = 'Ekran główny';
 $lang['Date_of_created'] = 'Data utworzenia';
 $lang['Date_of_ended'] = 'Data zakończenia';
 $lang['Date'] = 'Data';
@@ -45,6 +45,7 @@ $lang['Home'] = 'Home';
 //K
 $lang['KRS'] = 'KRS';
 //L
+$lang['Login'] = 'Zaloguj';
 $lang['Leave_a_message'] = 'Zostaw wiadomość';
 $lang['List_of_customers'] = 'Lista klientów';
 $lang['List_of_payments'] = 'Lista płatności';
@@ -64,6 +65,7 @@ $lang['Price'] = 'Cena';
 $lang['Profile'] = 'Profil';
 $lang['Projects'] = 'Zlecenia';
 $lang['Payments'] = 'Płatności';
+$lang['Person'] = 'Osoba';
 //Q
 //R
 $lang['Remove'] = 'Usuń';

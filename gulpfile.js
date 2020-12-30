@@ -25,24 +25,24 @@ function sassToCss() {
                         extname: ".css"
                     })
                     )
-            .pipe(dest("public/css"));
+            .pipe(dest("css"));
 }
 
 function cssMini() {
-    return src(["public/css/*.css", "!public/css/*.min.css"])
+    return src(["css/*.css", "!css/*.min.css"])
             .pipe(cleanCSS({compatibility: "ie8"}))
             .pipe(
                     rename({
                         suffix: ".min"
                     })
                     )
-            .pipe(dest("public/css"));
+            .pipe(dest("css"));
 }
 
 // Optimize Images
 function images() {
     return src("src/img/**/*")
-            .pipe(newer("public/img"))
+            .pipe(newer("img"))
             .pipe(
                     imagemin([
                         imagemin.gifsicle({
@@ -65,7 +65,7 @@ function images() {
                         })
                     ])
                     )
-            .pipe(dest("public/img"));
+            .pipe(dest("img"));
 }
 
 // Concat JS Scripts
@@ -73,13 +73,13 @@ function concatJs() {
     return (
             src(["src/js/*.js"])
             //.pipe(gulpConcat("application.js"))
-            .pipe(dest("public/js"))
+            .pipe(dest("js"))
             );
 }
 
 // Compress JS Script
 function compressJs() {
-    return src(["public/js/*.js", "!public/js/*.min.js"])
+    return src(["js/*.js", "!js/*.min.js"])
             .pipe(
                     minify({
                         ext: {
@@ -87,7 +87,7 @@ function compressJs() {
                         }
                     })
                     )
-            .pipe(dest("public/js"));
+            .pipe(dest("js"));
 }
 
 // Watch files and run tasks

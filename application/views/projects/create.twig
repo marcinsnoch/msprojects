@@ -43,7 +43,7 @@
                     </div>
                     <div class="form-group">
                         <label for="nameInput">{{ lang('Name') }}</label>
-                        <input type="text" name="name" class="form-control{{ form_error('name') ? ' is-invalid' }}" id="nameInput" value="{{ set_value('name') }}">
+                        <input type="text" name="name" class="form-control typeahead{{ form_error('name') ? ' is-invalid' }}" id="nameInput" value="{{ set_value('name') }}" autocomplete="off">
                         {{ form_error('name') }}
                     </div>
                     <div class="form-group">
@@ -81,7 +81,25 @@
 {% endblock %}
 {% block scripts %}
     {{ parent() }}
+    <script src="{{ base_url('plugins/bootstrap-3-typeahead/bootstrap3-typeahead.min.js') }}"></script>
     <script>
+        $(document).ready(function() {
+            $('.typeahead').typeahead({
+                autoSelect: true,
+                minLength: 2,
+                delay: 400,
+                source: function (query, process) {
+                    return $.ajax({
+                        url: baseUrl + '/projects/search-names',
+                        data: {q: query},
+                        dataType: 'json'
+                    })
+                    .done(function(response) {
+                        return process(response);
+                    });
+                }
+            });
+        });
         $("button[name=update_comment]").click(function (e) {
             e.preventDefault();
             const comment_id = $(this).val();

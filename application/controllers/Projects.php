@@ -80,4 +80,10 @@ class Projects extends MY_Controller
         }
         return $this->output->set_status_header(400);
     }
+
+    public function search_names()
+    {
+        $project = ProjectModel::where('name', 'like', '%'. $this->input->get('q') . '%')->get();
+        echo $project->pluck('name')->toJson();
+    }
 }
