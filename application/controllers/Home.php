@@ -18,7 +18,20 @@ class Home extends MY_Controller
     {
         $token = $this->input->get('token') ?? null;
         $summary = SummaryModel::with('projects')->where('token', $token)->first() ?? show_404();
-        // dump($summary->toArray());
+        if ($this->new_visit()) {
+            $summary->increment('views');
+        }
         $this->twig->display('home/show', compact('summary'));
+    }
+
+    private function new_visit()
+    {
+        if (!$this->session->userdata('visit')) {
+            $this->session->set_userdata(['visit' => true]);
+
+            return true;
+        }
+
+        return false;
     }
 }

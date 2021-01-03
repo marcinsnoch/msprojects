@@ -22,7 +22,7 @@ class Payments extends MY_Controller
         }
         $payments = PaymentModel::with('customer')->orderBy('created_at', 'desc')->get();
         $this->output
-                ->set_content_type('application/json')
-                ->set_output(json_encode($payments));
+            ->set_content_type('application/json')
+            ->set_output(json_encode($payments));
     }
 }

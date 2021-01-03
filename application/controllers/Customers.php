@@ -33,7 +33,7 @@ class Customers extends MY_Controller
         }
         $customers = CustomerModel::all();
         $this->output
-                ->set_content_type('application/json')
-                ->set_output(json_encode($customers));
+            ->set_content_type('application/json')
+            ->set_output(json_encode($customers));
     }
 }

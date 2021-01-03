@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Auth extends MY_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -85,11 +84,11 @@ class Auth extends MY_Controller
     {
         if ($this->input->post('register') && $this->form_validation->run('register_user')) {
             $user = UserModel::create([
-                        'email' => $this->input->post('email'),
-                        'full_name' => $this->input->post('full_name'),
-                        'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                        'token' => bin2hex(random_bytes(64)),
-                        'role' => 'tmp',
+                'email' => $this->input->post('email'),
+                'full_name' => $this->input->post('full_name'),
+                'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+                'token' => bin2hex(random_bytes(64)),
+                'role' => 'tmp',
             ]);
             if ($user) {
                 $this->load->library('Sendmail');

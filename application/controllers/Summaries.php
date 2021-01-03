@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Summaries extends MY_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -74,8 +73,8 @@ class Summaries extends MY_Controller
         }
         $summaries = SummaryModel::with('customer', 'projects')->orderBy('created_at', 'desc')->get();
         $this->output
-                ->set_content_type('application/json')
-                ->set_output(json_encode($summaries));
+            ->set_content_type('application/json')
+            ->set_output(json_encode($summaries));
     }
 
     public function table_data_projects()
@@ -86,8 +85,8 @@ class Summaries extends MY_Controller
         $id = $this->input->get('summary_id');
         $summaries = SummaryModel::with('projects')->orderBy('created_at', 'desc')->find($id);
         $this->output
-                ->set_content_type('application/json')
-                ->set_output(json_encode($summaries->projects));
+            ->set_content_type('application/json')
+            ->set_output(json_encode($summaries->projects));
     }
 
     public function ajax_remove_project()
@@ -100,8 +99,10 @@ class Summaries extends MY_Controller
         if ($summary_id != '' && !empty($ids)) {
             $summary = SummaryModel::find($summary_id);
             $summary->projects()->detach($ids);
+
             return $this->output->set_status_header(201);
         }
+
         return $this->output->set_status_header(400);
     }
 }

@@ -31,7 +31,50 @@
                 </div>
                 {{ form_open() }}
                 <div class="card-body">
-
+                    <div class="form-group">
+                        <label for="nameInput">{{ lang('Name') }}</label>
+                        <input type="text" name="name" class="form-control{{ form_error('name') ? ' is-invalid' }}" id="nameInput" value="{{ set_value('name') }}">
+                        {{ form_error('name') }}
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="emilInput">{{ lang('Email') }}</label>
+                                <input type="email" name="email" class="form-control{{ form_error('email') ? ' is-invalid' }}" id="emilInput" value="{{ set_value('email') }}">
+                                {{ form_error('email') }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="websiteInput">{{ lang('Website') }}</label>
+                                <input type="text" name="website" class="form-control{{ form_error('website') ? ' is-invalid' }}" id="websiteInput" value="{{ set_value('website') }}">
+                                {{ form_error('website') }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="websiteInput">{{ lang('Website') }}</label>
+                                <input type="text" name="website" class="form-control{{ form_error('website') ? ' is-invalid' }}" id="websiteInput" value="{{ set_value('website') }}">
+                                {{ form_error('website') }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="websiteInput">{{ lang('Website') }}</label>
+                                <input type="text" name="website" class="form-control{{ form_error('website') ? ' is-invalid' }}" id="websiteInput" value="{{ set_value('website') }}">
+                                {{ form_error('website') }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="websiteInput">{{ lang('Website') }}</label>
+                                <input type="text" name="website" class="form-control{{ form_error('website') ? ' is-invalid' }}" id="websiteInput" value="{{ set_value('website') }}">
+                                {{ form_error('website') }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <a href="{{ base_url('/projects') }}" class="btn btn-default">
@@ -47,42 +90,4 @@
 {% endblock %}
 {% block scripts %}
     {{ parent() }}
-    <script>
-        $("button[name=update_comment]").click(function (e) {
-            e.preventDefault();
-            const comment_id = $(this).val();
-            const body = $('#commentId-' + comment_id).val();
-            $.ajax({
-                type: "POST",
-                url: baseUrl + '/comments/ajax-update',
-                data: {
-                    "comment_id": comment_id,
-                    "body": body
-                },
-                success: function (data) {
-                    window.location.reload(true);
-                },
-                error: function (data) {
-                    console.log(data);
-                }
-            });
-        });
-        $("button[name=del_comment]").click(function (e) {
-            e.preventDefault();
-            const comment_id = $(this).val();
-            $.ajax({
-                type: "POST",
-                url: baseUrl + '/comments/ajax-delete',
-                data: {
-                    'comment_id': comment_id
-                },
-                success: function (data) {
-                    $('#comment-' + comment_id).remove();
-                },
-                error: function (data) {
-                    console.log(data);
-                }
-            });
-        });
-    </script>
 {% endblock %}

@@ -22,8 +22,10 @@ class Comments extends MY_Controller
         ];
         if (CommentModel::create($data)) {
             set_alert('success', lang('Created'));
+
             return $this->output->set_status_header(201);
         }
+
         return $this->output->set_status_header(400);
     }
 
@@ -38,8 +40,10 @@ class Comments extends MY_Controller
             $comment->user_id = $this->input->post('user_id') ?? $this->session->user_id;
             $comment->save();
             set_alert('success', lang('Updated'));
+
             return $this->output->set_status_header(201);
         }
+
         return $this->output->set_status_header(400);
     }
 
@@ -52,8 +56,10 @@ class Comments extends MY_Controller
         if ($comment) {
             $comment->delete();
             set_alert('success', lang('Deleted'));
+
             return $this->output->set_status_header(201);
         }
+
         return $this->output->set_status_header(400);
     }
 }

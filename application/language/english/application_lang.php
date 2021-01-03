@@ -55,6 +55,7 @@ $lang['List_of_summaries'] = 'List of summaries';
 //N
 $lang['Name'] = 'Name';
 $lang['New'] = 'New';
+$lang['New_customer'] = 'New customer';
 $lang['NIP'] = 'NIP';
 //O
 //P

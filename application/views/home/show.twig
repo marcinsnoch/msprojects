@@ -41,7 +41,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for project in summary.projects %}
+                            {% set projects = summary.projects %}
+                            {% for project in projects.sort() %}
                                 <tr>
                                     <td>{{ loop.index }}</td>
                                     <td>{{ '%04d'|format(project.id) }}</td>
@@ -55,7 +56,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="5" class="text-right">{{ lang('Total_amount') }}:</td>
+                                <td colspan="6" class="text-right">{{ lang('Total_amount') }}:</td>
                                 <td><strong>{{ summary.projects.sum('price')|format_currency('PLN') }}</strong></td>
                             </tr>
                         </tfoot>
